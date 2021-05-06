@@ -1,0 +1,4 @@
+Platform,Translatable,Ready,Key,DE,EN
+iOS,"","",NSCameraUsageDescription,"Hallo Welt!","Hello World!"
+"","","",hello_world,"Hallo Welt!","Hello World!"
+Android,"","","unsupported_platform","Upsi pupsi!","Ooops!"
