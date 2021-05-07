@@ -1,6 +1,6 @@
 # localice
 
-Generate `Localizable.strings`, `InfoPlist.strings` and `resource.xml` from multiple CSV files.
+Generate `Localizable.strings`, `InfoPlist.strings` and `strings.xml` from multiple CSV files.
 
 > **Attention:** This project is in early development and not yet meant to be used in production.
 > It lacks validation, tests and might break configs in future versions. Also: I am still learning Go. 
