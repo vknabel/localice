@@ -8,9 +8,11 @@ import (
 	"os"
 	"path"
 	"regexp"
+
+	"github.com/vknabel/localice/config"
 )
 
-func ReadSource(projectDir string, source CsvSourceConfig) ([]Localization, error) {
+func ReadSource(projectDir string, source config.CsvSourceConfig) ([]Localization, error) {
 	localizations, err := ReadCsvSource(projectDir, source)
 	if err != nil {
 		return nil, err
@@ -31,7 +33,7 @@ func ReadSource(projectDir string, source CsvSourceConfig) ([]Localization, erro
 	return localizations, err
 }
 
-func ReadCsvSource(projectDir string, source CsvSourceConfig) ([]Localization, error) {
+func ReadCsvSource(projectDir string, source config.CsvSourceConfig) ([]Localization, error) {
 	sourcePath := path.Join(projectDir, source.Location)
 	rawFile, err := os.Open(sourcePath)
 	if err != nil {

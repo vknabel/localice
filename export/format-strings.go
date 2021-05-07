@@ -1,20 +1,22 @@
-package internal
+package export
 
 import (
 	"fmt"
 	"io"
 	"strconv"
+
+	"github.com/vknabel/localice/internal"
 )
 
-type StringsLocalizationWriter struct {
+type StringsLocalizationExporter struct {
 	w io.Writer
 }
 
-func NewStringsLocalizationWriter(w io.Writer) StringsLocalizationWriter {
-	return StringsLocalizationWriter{w}
+func NewStringsLocalizationExporter(w io.Writer) StringsLocalizationExporter {
+	return StringsLocalizationExporter{w}
 }
 
-func (stringsWriter StringsLocalizationWriter) Write(localization Localization) error {
+func (stringsWriter StringsLocalizationExporter) Export(localization internal.Localization) error {
 	for _, translation := range localization.Translations {
 		_, err := io.WriteString(stringsWriter.w, serializedString(translation.Key, translation.Text))
 		if err != nil {

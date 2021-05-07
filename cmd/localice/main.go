@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/vknabel/localice/config"
+	"github.com/vknabel/localice/export"
 	"github.com/vknabel/localice/internal"
 )
 
 func main() {
 	projectDir := "."
-	config, err := internal.LoadInferredProjectConfig(projectDir)
+	config, err := config.LoadInferredProjectConfig(projectDir)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,7 +36,7 @@ func main() {
 
 	for _, localization := range localizationsByName {
 		for _, platform := range config.Exports {
-			err = internal.WriteLocalizationForExport(localization, platform)
+			err = export.ExportLocalization(localization, platform)
 			if err != nil {
 				log.Fatal(err)
 			}

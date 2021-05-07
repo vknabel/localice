@@ -1,9 +1,11 @@
-package internal
+package export
 
 import (
 	"encoding/xml"
 	"io"
 	"log"
+
+	"github.com/vknabel/localice/internal"
 )
 
 type androidXMLResource struct {
@@ -16,15 +18,17 @@ type androidXMLString struct {
 	Text    string   `xml:",chardata"`
 }
 
-type ResourceXmlLocalizationWriter struct {
+type ResourceXmlLocalizationExporter struct {
 	w io.Writer
 }
 
-func NewResourceXmlLocalizationWriter(w io.Writer) ResourceXmlLocalizationWriter {
-	return ResourceXmlLocalizationWriter{w}
+func NewResourceXmlLocalizationExporter(w io.Writer) ResourceXmlLocalizationExporter {
+	return ResourceXmlLocalizationExporter{w}
 }
-func (resourceWriter ResourceXmlLocalizationWriter) Write(localization Localization) error {
-	_, err := io.WriteString(resourceWriter.w, `<?xml version="1.0" encoding="utf-8"?>`)
+
+func (resourceWriter ResourceXmlLocalizationExporter) Export(localization internal.Localization) error {
+	_, err := io.WriteString(resourceWriter.w, `<?xml version="1.0" encoding="utf-8"?>
+`)
 	if err != nil {
 		return err
 	}
@@ -45,5 +49,9 @@ func (resourceWriter ResourceXmlLocalizationWriter) Write(localization Localizat
 		log.Fatal(err)
 	}
 
+	_, err = io.WriteString(resourceWriter.w, "\n")
+	if err != nil {
+		log.Fatal(err)
+	}
 	return nil
 }
