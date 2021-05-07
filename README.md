@@ -66,4 +66,4 @@ Create a `.localice.json` file in your project root.
 
 ## License
 
-vscode-swiftlint is available under the [MIT](./LICENSE) license.
+localice is available under the [MIT](./LICENSE) license.
