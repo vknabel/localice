@@ -32,7 +32,7 @@ Create a `.localice.json` file in your project root.
             }
         }
     ],
-    "platforms": [
+    "exports": [
         {
             "format": "resource-xml",
             "path": "android/${lowerLocale}.xml",
@@ -59,8 +59,9 @@ Create a `.localice.json` file in your project root.
 * improved logging feedback
 * parsing json sources
 * Better and multiple examples
-* Test coverage
 * Documentation
+* Test coverage
+* code refactorings
 * `localice init` command
 * Parallelization
 
