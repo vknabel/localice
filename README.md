@@ -54,6 +54,16 @@ Create a `.localice.json` file in your project root.
 }
 ```
 
+## Future Development
+
+* improved logging feedback
+* parsing json sources
+* Better and multiple examples
+* Test coverage
+* Documentation
+* `localice init` command
+* Parallelization
+
 ## License
 
 vscode-swiftlint is available under the [MIT](./LICENSE) license.

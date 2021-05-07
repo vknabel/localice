@@ -5,13 +5,15 @@ import (
 	"os"
 	"regexp"
 	"strings"
+
+	"golang.org/x/text/language"
 )
 
 type LocalizationWriter interface {
 	Write(localization Localization) error
 }
 
-func WriteLocalizationForPlatform(localization Localization, platform PlatformConfig) error {
+func WriteLocalizationForExport(localization Localization, platform ExportConfig) error {
 	targetPath := expandedPath(localization, platform)
 	file, err := os.Create(targetPath)
 	if err != nil {
@@ -61,9 +63,29 @@ func WriteLocalizationForPlatform(localization Localization, platform PlatformCo
 	return nil
 }
 
-func expandedPath(localization Localization, platform PlatformConfig) string {
+func expandedPath(localization Localization, platform ExportConfig) string {
 	path := strings.ReplaceAll(platform.Path, "${lowerLocale}", strings.ToLower(localization.Name))
 	path = strings.ReplaceAll(path, "${upperLocale}", strings.ToUpper(localization.Name))
 	path = strings.ReplaceAll(path, "${locale}", localization.Name)
+
+	if tag, err := language.Parse(localization.Name); err == nil {
+		path = strings.ReplaceAll(path, "${region}", "")
+
+		base, _ := tag.Base()
+		path = strings.ReplaceAll(path, "${base}", base.String())
+		path = strings.ReplaceAll(path, "${lowerBase}", strings.ToLower(base.String()))
+		path = strings.ReplaceAll(path, "${upperBase}", strings.ToUpper(base.String()))
+
+		script, _ := tag.Script()
+		path = strings.ReplaceAll(path, "${script}", script.String())
+		path = strings.ReplaceAll(path, "${lowerScript}", strings.ToLower(script.String()))
+		path = strings.ReplaceAll(path, "${upperScript}", strings.ToUpper(script.String()))
+
+		region, _ := tag.Region()
+		path = strings.ReplaceAll(path, "${region}", region.String())
+		path = strings.ReplaceAll(path, "${lowerRegion}", strings.ToLower(region.String()))
+		path = strings.ReplaceAll(path, "${upperRegion}", strings.ToUpper(region.String()))
+
+	}
 	return path
 }

@@ -20,10 +20,10 @@
             }
         }
     ],
-    "platforms": [
+    "exports": [
         {
             "format": "resource-xml",
-            "path": "android/${lowerLocale}.xml",
+            "path": "app/res/${locale}.xml",
             "matchPlatform": "^(Android)?$"
         },
         {

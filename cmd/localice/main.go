@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/vknabel/localice/internal"
@@ -8,14 +9,14 @@ import (
 
 func main() {
 	projectDir := "."
-	config, err := internal.LoadProjectConfig(projectDir)
+	config, err := internal.LoadInferredProjectConfig(projectDir)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	localizationsByName := make(map[string]internal.Localization)
 	for _, sourceConfig := range config.CsvSources {
-		currentLocalizations, err := internal.ReadCsvSource(projectDir, sourceConfig)
+		currentLocalizations, err := internal.ReadSource(projectDir, sourceConfig)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -29,12 +30,15 @@ func main() {
 		}
 	}
 
+	fmt.Println("✅ sources loaded")
+
 	for _, localization := range localizationsByName {
-		for _, platform := range config.Platforms {
-			err = internal.WriteLocalizationForPlatform(localization, platform)
+		for _, platform := range config.Exports {
+			err = internal.WriteLocalizationForExport(localization, platform)
 			if err != nil {
 				log.Fatal(err)
 			}
 		}
 	}
+	fmt.Println("✅ exports finished")
 }

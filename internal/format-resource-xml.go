@@ -30,6 +30,7 @@ func (resourceWriter ResourceXmlLocalizationWriter) Write(localization Localizat
 	}
 
 	xmlEncoder := xml.NewEncoder(resourceWriter.w)
+	xmlEncoder.Indent("", "    ")
 	resources := androidXMLResource{
 		Strings: make([]androidXMLString, len(localization.Translations)),
 	}
