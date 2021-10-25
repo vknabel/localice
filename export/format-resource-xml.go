@@ -4,13 +4,14 @@ import (
 	"encoding/xml"
 	"io"
 	"log"
+	"strings"
 
 	"github.com/vknabel/localice/internal"
 )
 
 type androidXMLResource struct {
 	XMLName xml.Name           `xml:"resources"`
-	Strings []androidXMLString `xml:",innerxml"`
+	Strings []androidXMLString `xml:",any"`
 }
 type androidXMLString struct {
 	XMLName xml.Name `xml:"string"`
@@ -41,7 +42,7 @@ func (resourceWriter ResourceXmlLocalizationExporter) Export(localization intern
 	for index, translation := range localization.Translations {
 		resources.Strings[index] = androidXMLString{
 			Name: translation.Key,
-			Text: translation.Text,
+			Text: escapeAndroidXMLString(translation.Text),
 		}
 	}
 	err = xmlEncoder.Encode(resources)
@@ -54,4 +55,16 @@ func (resourceWriter ResourceXmlLocalizationExporter) Export(localization intern
 		log.Fatal(err)
 	}
 	return nil
+}
+
+func escapeAndroidXMLString(str string) string {
+	str = strings.ReplaceAll(str, "\\", "\\\\")
+	str = strings.ReplaceAll(str, "@", "\\@")
+	str = strings.ReplaceAll(str, "?", "\\?")
+	str = strings.ReplaceAll(str, "\n", "\\n")
+	str = strings.ReplaceAll(str, "\t", "\\t")
+	// U+XXXX \uXXXX
+	str = strings.ReplaceAll(str, "'", "\\'")
+	str = strings.ReplaceAll(str, "\"", "\\\"")
+	return str
 }

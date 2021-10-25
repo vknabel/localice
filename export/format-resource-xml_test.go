@@ -48,6 +48,7 @@ func TestResourceXmlExportSucceedsWithSpecialCharacters(t *testing.T) {
 <resources>
     <string name="simple_emoji">🙈</string>
     <string name="xml_characters">&lt;xml&gt;</string>
+    <string name="apostrophe">\&#39;</string>
 </resources>
 `
 	actual, err := exported(internal.Localization{
@@ -55,13 +56,14 @@ func TestResourceXmlExportSucceedsWithSpecialCharacters(t *testing.T) {
 		Translations: []internal.Translation{
 			{Key: "simple_emoji", Text: "🙈"},
 			{Key: "xml_characters", Text: "<xml>"},
+			{Key: "apostrophe", Text: "'"},
 		},
 	})
 	if err != nil {
 		t.Error(err)
 	}
 	if actual != expected {
-		t.Errorf("not expected: %s", actual)
+		t.Errorf("not expected: \n%s\n\nexpected: \n%s", actual, expected)
 	}
 }
 
