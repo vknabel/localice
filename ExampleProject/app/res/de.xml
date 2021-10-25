@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_world">Hallo Welt!</string>
-    <string name="unsupported_platform">Upsi pupsi!</string>
+    <string name="unsupported_platform">Upsi pupsi 🙈!</string>
     <string name="secret_key">:O</string>
 </resources>

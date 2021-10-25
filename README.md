@@ -54,6 +54,12 @@ Create a `.localice.json` file in your project root.
 }
 ```
 
+## Installation
+
+```bash
+brew install vknabel/install/localice
+```
+
 ## Future Development
 
 * improved logging feedback

@@ -10,7 +10,7 @@ import (
 
 type androidXMLResource struct {
 	XMLName xml.Name           `xml:"resources"`
-	Strings []androidXMLString `xml:",any"`
+	Strings []androidXMLString `xml:",innerxml"`
 }
 type androidXMLString struct {
 	XMLName xml.Name `xml:"string"`

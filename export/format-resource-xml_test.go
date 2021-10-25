@@ -43,6 +43,28 @@ func TestResourceXmlExportSucceedsWhenValid(t *testing.T) {
 	}
 }
 
+func TestResourceXmlExportSucceedsWithSpecialCharacters(t *testing.T) {
+	expected := `<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="simple_emoji">🙈</string>
+    <string name="xml_characters">&lt;xml&gt;</string>
+</resources>
+`
+	actual, err := exported(internal.Localization{
+		Name: "en",
+		Translations: []internal.Translation{
+			{Key: "simple_emoji", Text: "🙈"},
+			{Key: "xml_characters", Text: "<xml>"},
+		},
+	})
+	if err != nil {
+		t.Error(err)
+	}
+	if actual != expected {
+		t.Errorf("not expected: %s", actual)
+	}
+}
+
 func exported(localization internal.Localization) (string, error) {
 	buf := new(bytes.Buffer)
 	w := NewResourceXmlLocalizationExporter(buf)
