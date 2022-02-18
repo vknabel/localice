@@ -35,7 +35,7 @@ Create a `.localice.json` file in your project root.
     "exports": [
         {
             "format": "resource-xml",
-            "path": "android/${lowerLocale}.xml",
+            "path": "android/${resourceLocale}.xml",
             "matchPlatform": "^(Android)?$"
         },
         {

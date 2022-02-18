@@ -1,6 +1,7 @@
 package export
 
 import (
+	"fmt"
 	"strings"
 
 	"golang.org/x/text/language"
@@ -27,6 +28,12 @@ func expandExportPath(name string, exportPath string) string {
 		path = strings.ReplaceAll(path, "${lowerRegion}", strings.ToLower(region.String()))
 		path = strings.ReplaceAll(path, "${upperRegion}", strings.ToUpper(region.String()))
 
+		base, _, rawRegion := tag.Raw()
+		if rawRegion.String() == "ZZ" {
+			path = strings.ReplaceAll(path, "${resourceLocale}", base.String())
+		} else {
+			path = strings.ReplaceAll(path, "${resourceLocale}", fmt.Sprintf("%s-r%s", base.String(), rawRegion.String()))
+		}
 	}
 	return path
 }

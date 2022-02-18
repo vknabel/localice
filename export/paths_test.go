@@ -33,6 +33,9 @@ func TestExpandedPathLocale(t *testing.T) {
 		{"en-US", "${region}", "US"},
 		{"en-US", "${lowerRegion}", "us"},
 		{"en-US", "${upperRegion}", "US"},
+
+		{"de", "${resourceLocale}", "de"},
+		{"en-GB", "${resourceLocale}", "en-rGB"},
 	}
 	for _, test := range testCases {
 		actual := expandExportPath(test.name, test.path)
